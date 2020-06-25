@@ -19,16 +19,25 @@
 h1 {
   text-align: center;
   color: black;
+  color: white;
+  font-family: fantasy;
 }
 
 h2 {
   text-align: center;
+  color: white;
+  font-family: fantasy;
 }
 
-/* #score {
-  text-align: center;
+.jumbotron {
+  background-color: rgb(57, 57, 61)
+}
+#score {
+  color: white;
+  font-family: fantasy;
 }
 
-#highscore {
-  text-emphasis: center;
-} */
+#topscore {
+  color: white;
+  font-family: fantasy;
+}
