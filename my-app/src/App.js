@@ -70,7 +70,7 @@ class App extends Component {
             autoPlay
             controls
             loop
-            volume= {0.17}
+            volume= {0.16}
           />
 
         </Container>
