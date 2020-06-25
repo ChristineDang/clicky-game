@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
-import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
+import { Jumbotron, Container } from 'react-bootstrap';
 import Img from './components/cards/cards.js';
 import Wrapper from './wrapper'
 import './App.css';
 import cards from "./cards.json";
+import ReactAudioPlayer from 'react-audio-player';
+import Audio from './components/OUAT.mp3';
 
 
 class App extends Component {
@@ -13,21 +15,19 @@ class App extends Component {
   state = {
     cards,
     score: 0,
-    topscore: 0
+    topscore: 0,
   };
 
 
   clickCount = id => {
     //this is the area where we're going to count when a card has been clicked on
     //if card has been clicked on before, the second click ends the game, else add a count/point to user's score
-    this.state.cards.find((o, i) => {
-      if (o.id === id) {
+    this.state.cards.find((x, i) => {
+      if (x.id === id) {
         if(cards[i].count === 0){
           cards[i].count = cards[i].count + 1;
-          this.setState({score : this.state.score + 1}, function(){
-            console.log(this.state.score);
-          });
-          this.state.cards.sort(() => Math.random() - 0.5)
+          this.setState({score : this.state.score + 1});
+          this.state.cards.sort(() => Math.random() - .25)
           return true; 
         } else {
           this.endGame();
@@ -37,15 +37,15 @@ class App extends Component {
   }
   
   endGame = () => {
+    //this will hold the code that sets the top score if the current ending score is higher than the top score
     if (this.state.score > this.state.topscore) {
-      this.setState({topscore: this.state.score}, function() {
-        console.log(this.state.topscore);
-      });
+      this.setState({topscore: this.state.score});
     }
+    //this will hold the code that resets the cards back to zero
     this.state.cards.forEach(card => {
       card.count = 0;
     });
-    alert(`Game Over :( \nscore: ${this.state.score}`);
+    alert(`Game Over, Try Again! \nscore: ${this.state.score} \nHigh score: ${this.state.topscore}`);
     this.setState({score: 0});
     return true;
   }
@@ -53,16 +53,25 @@ class App extends Component {
   render () {
     return (
       <><Navbar expand="lg" variant="dark" bg="dark">
-        <Navbar.Brand href="#home">Once Upon A Clicky Game</Navbar.Brand>
+        <Navbar.Brand href="index.html">Reset Scores</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
         </Navbar.Collapse>
       </Navbar>
-      <Jumbotron fluid>
+      <Jumbotron fluid className="jumbotron">
         <Container>
-          <h1>Once Upon A Time</h1>
-          <p id="score">Score: </p>
-          <p id="topscore">High Score: </p>
+          <h1>Once Upon A Clicky Game</h1>
+          <h2>Featuring Once Upon A Time</h2>
+          <p id="score">Score: {this.state.score}</p>
+          <p id="topscore">High Score: {this.state.topscore}</p>
+
+          <ReactAudioPlayer
+            src= {Audio}
+            autoPlay
+            controls
+            loop
+          />
+
         </Container>
       </Jumbotron>
       <Container>
